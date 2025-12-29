@@ -1,5 +1,50 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
+// Helper to get auth headers
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` })
+  };
+};
+
+// Auth API
+export const authAPI = {
+  login: async (email, password) => {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    return response.json();
+  },
+  
+  register: async (name, email, password, coordinates) => {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, coordinates })
+    });
+    return response.json();
+  },
+  
+  getMe: async () => {
+    const response = await fetch(`${API_BASE_URL}/auth/me`, {
+      headers: getAuthHeaders()
+    });
+    return response.json();
+  },
+  
+  logout: async () => {
+    const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    return response.json();
+  }
+};
+
 // Items API
 export const itemsAPI = {
   getAll: async () => {
@@ -22,7 +67,7 @@ export const itemsAPI = {
   create: async (itemData) => {
     const response = await fetch(`${API_BASE_URL}/items`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders(),
       body: JSON.stringify(itemData)
     });
     return response.json();
@@ -31,7 +76,7 @@ export const itemsAPI = {
   update: async (id, itemData) => {
     const response = await fetch(`${API_BASE_URL}/items/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders(),
       body: JSON.stringify(itemData)
     });
     return response.json();
@@ -39,7 +84,8 @@ export const itemsAPI = {
   
   delete: async (id) => {
     const response = await fetch(`${API_BASE_URL}/items/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: getAuthHeaders()
     });
     return response.json();
   }
@@ -58,9 +104,13 @@ export const requestsAPI = {
   },
   
   create: async (requestData) => {
+    const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE_URL}/requests`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` })
+      },
       body: JSON.stringify(requestData)
     });
     return response.json();

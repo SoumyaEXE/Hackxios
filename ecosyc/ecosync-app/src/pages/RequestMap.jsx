@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { requestsAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const RequestMap = () => {
+  const { user } = useAuth();
   const [requests, setRequests] = useState([]);
   const [newRequestCoords, setNewRequestCoords] = useState(null);
   const [showRequestForm, setShowRequestForm] = useState(false);
@@ -84,8 +86,8 @@ const RequestMap = () => {
         itemName: formData.itemName,
         description: formData.description,
         urgency: formData.urgency,
-        coordinates: newRequestCoords, // [lat, lng]
-        userId: '000000000000000000000000' // Temporary - will be replaced with auth
+        coordinates: newRequestCoords,
+        userId: user?.id || '000000000000000000000000'
       };
       
       await requestsAPI.create(requestData);

@@ -6,23 +6,30 @@ import ItemDetail from './pages/ItemDetail';
 import ListItem from './pages/ListItem';
 import Profile from './pages/profile';
 import RequestMap from './pages/RequestMap';
-import Header from './components/header';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Header from './components/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/items" element={<Items />} />
-        <Route path="/items/:id" element={<ItemDetail />} />
-        <Route path="/list" element={<ListItem />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/request-map" element={<RequestMap/>} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/items" element={<Items />} />
+          <Route path="/items/:id" element={<ItemDetail />} />
+          <Route path="/list" element={<ListItem />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/request-map" element={<RequestMap />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

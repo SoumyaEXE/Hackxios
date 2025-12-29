@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { itemsAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const ListItem = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -14,6 +16,22 @@ const ListItem = () => {
     imageUrl: ''
   });
   const [location, setLocation] = useState(null);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Please login to list items</h2>
+          <button
+            onClick={() => navigate('/login')}
+            className="px-6 py-3 bg-green-500 hover:bg-green-400 text-black font-bold rounded-full"
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
@@ -43,7 +61,7 @@ const ListItem = () => {
       const itemData = {
         ...formData,
         coordinates: location,
-        ownerId: '000000000000000000000000'
+        ownerId: user.id
       };
 
       await itemsAPI.create(itemData);
