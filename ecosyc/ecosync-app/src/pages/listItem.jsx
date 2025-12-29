@@ -43,7 +43,7 @@ const ListItem = () => {
       const itemData = {
         ...formData,
         coordinates: location,
-        ownerId: '000000000000000000000000' // Temporary - will be replaced with auth
+        ownerId: '000000000000000000000000'
       };
 
       await itemsAPI.create(itemData);
@@ -64,7 +64,6 @@ const ListItem = () => {
         <p className="text-slate-400 mb-8">Share what you're not using with your community</p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
           <div>
             <label className="block text-sm font-medium mb-2">Item Name *</label>
             <input
@@ -77,7 +76,6 @@ const ListItem = () => {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-medium mb-2">Description *</label>
             <textarea
@@ -89,7 +87,6 @@ const ListItem = () => {
             />
           </div>
 
-          {/* Category */}
           <div>
             <label className="block text-sm font-medium mb-2">Category *</label>
             <select
@@ -106,7 +103,6 @@ const ListItem = () => {
             </select>
           </div>
 
-          {/* Type */}
           <div>
             <label className="block text-sm font-medium mb-2">Availability Type *</label>
             <select
@@ -120,7 +116,6 @@ const ListItem = () => {
             </select>
           </div>
 
-          {/* Price (if rent/sell) */}
           {(formData.type === 'rent' || formData.type === 'sell') && (
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -136,7 +131,6 @@ const ListItem = () => {
             </div>
           )}
 
-          {/* Image URL */}
           <div>
             <label className="block text-sm font-medium mb-2">Image URL (Optional)</label>
             <input
@@ -148,7 +142,6 @@ const ListItem = () => {
             />
           </div>
 
-          {/* Location */}
           <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -174,7 +167,6 @@ const ListItem = () => {
             </div>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}

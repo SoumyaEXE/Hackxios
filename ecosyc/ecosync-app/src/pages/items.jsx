@@ -39,7 +39,6 @@ const Items = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-white p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold mb-2">Browse Items</h1>
@@ -53,7 +52,6 @@ const Items = () => {
           </button>
         </div>
 
-        {/* Filters */}
         <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
           {['all', 'tools', 'kitchen', 'electronics', 'outdoor', 'sports', 'other'].map(cat => (
             <button
@@ -70,7 +68,6 @@ const Items = () => {
           ))}
         </div>
 
-        {/* Items Grid */}
         {loading ? (
           <div className="text-center py-20">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
@@ -88,7 +85,6 @@ const Items = () => {
                 onClick={() => navigate(`/items/${item._id}`)}
                 className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-green-500 transition-all cursor-pointer group"
               >
-                {/* Image */}
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   {item.imageUrl ? (
                     <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
@@ -102,7 +98,6 @@ const Items = () => {
                   </div>
                 </div>
 
-                {/* Content */}
                 <div className="p-4">
                   <h3 className="text-xl font-bold mb-2">{item.title}</h3>
                   <p className="text-slate-400 text-sm mb-4 line-clamp-2">{item.description}</p>
